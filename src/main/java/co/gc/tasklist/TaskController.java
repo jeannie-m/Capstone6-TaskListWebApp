@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.gc.tasklist.dao.TaskRepo;
 import co.gc.tasklist.dao.UserRepo;
@@ -39,12 +40,21 @@ public class TaskController {
 	
 	
 	@PostMapping("/add")
-	public ModelAndView addTask(Task task) {		
+	public ModelAndView addTask(Task task, RedirectAttributes rd) {		
 		User user = (User) sesh.getAttribute("user");
+		if (user == null) {
+			rd.addFlashAttribute("messageLoginPlz", "Please login first");
+			return new ModelAndView("redirect:/login");
+			//redirect to login with redir attribute
+		}
 		task.setUser(user);
 		tRepo.save(task);
 		return new ModelAndView("dashboard", "recentTask", task);
 	}
 	
-
+	@RequestMapping("/delete")
+	public ModelAndView deleteTask(@RequestParam("id") Long id) {
+		tRepo.deleteById(id);
+		return new ModelAndView("redirect:/dashboard");
+	}
 }

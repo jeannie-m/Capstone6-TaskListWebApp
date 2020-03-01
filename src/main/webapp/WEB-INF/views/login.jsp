@@ -34,12 +34,12 @@
 <body>
 <%@ include file="partials/navbar.jsp"%>
 	<div class="row">
-		<div class="col-md-4"></div>
-		<div class="col-md-4">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
 
 			<form method="post"
 				class="border border-light p-5">
-
+				<p class="h6 mb-4 text-center">${messageLoginPlz}</p>
 				<p class="h4 mb-4 text-center">Login</p>
 
 				<div>
@@ -84,7 +84,7 @@
 			</form>
 
 		</div>
-		<div class="col-md-4"></div>
+		<div class="col-md-2"></div>
 	</div>
 
 

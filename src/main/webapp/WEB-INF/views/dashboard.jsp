@@ -28,12 +28,12 @@
 <!-- Your custom styles -->
 <link rel="stylesheet" href="/style.css">
 
-<title>${user.username}'sDashboard</title>
+<title>${user.username}'s Dashboard</title>
 </head>
 <body>
 	<%@ include file="partials/navbar.jsp"%>
 	<header>
-		<h1>${user.username},welcometo your dashboard.</h1>
+		<h1>${user.username}, welcometo your dashboard.</h1>
 	</header>
 
 	<p>Your tasks will show here when I figure out how to do that. MAKE
@@ -50,7 +50,9 @@
 				<th>Due Date</th>
 				<th>Priority</th>
 				<th>Complete</th>
+				<th></th>
 			</tr>
+			
 	<c:forEach var="task" items="${user.myTasks}">
 
 			<tr>
@@ -60,6 +62,7 @@
 				<td>${task.dueDate}</td>
 				<td>${task.priorityLevel}</td>
 				<td>${task.status}</td>
+				<td><a href="/tasks/delete?id=${task.id}" type="button" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></td>
 			</tr>
 		
 	</c:forEach>

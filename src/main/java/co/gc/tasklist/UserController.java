@@ -2,6 +2,7 @@ package co.gc.tasklist;
 
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,12 +76,20 @@ public class UserController {
 	
 	@RequestMapping("/dashboard")
 	public ModelAndView showDashboard(RedirectAttributes rd) {
-		if (sesh.getAttribute("user") == null) {
+		
+		User user = (User) sesh.getAttribute("user");
+		if (user == null) {
 			rd.addFlashAttribute("messageLoginPlz", "Please login first");
 			return new ModelAndView("redirect:/login");
 			//redirect to login with redir attribute
 		}else {
+			//System.out.println(user.getMyTasks());
 		return new ModelAndView("dashboard");
 		}
 	}
+	@PostConstruct 	
+	public void testIt() {
+		System.out.println("tester"); 
+		User user = (User)uRepo.findById(1L);
+		}
 }

@@ -99,17 +99,17 @@ public class Task {
 		this.user = user;
 	}
 
-	@Override
-	public String toString() {
-		return "Task [id=" + id + ", name=" + name + ", description=" + description + ", dueDate=" + dueDate
-				+ ", status=" + status + ", priorityLevel=" + priorityLevel + ", user=" + user + "]";
-	}
-
-	
 //	@Override
 //	public String toString() {
-//		return "Tester";
+//		return "Task [id=" + id + ", name=" + name + ", description=" + description
+//				+ ", priorityLevel=" + priorityLevel + "]";
 //	}
+
+	
+	@Override
+	public String toString() {
+		return "Tester";
+	}
 	
 	
 }
