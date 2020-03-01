@@ -75,9 +75,9 @@ public class Task {
 		this.dueDate = dueDate;
 	}
 
-	public void setStatus(Boolean status) {
-		this.status = status;
-	}
+//	public void setStatus(Boolean status) {
+//		this.status = status;
+//	}
 	
 	public void setStatus(String status) {
 		Boolean statusToBool = false;
@@ -99,17 +99,17 @@ public class Task {
 		this.user = user;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Task [id=" + id + ", name=" + name + ", description=" + description
-//				+ ", priorityLevel=" + priorityLevel + "]";
-//	}
-
-	
 	@Override
 	public String toString() {
-		return "Tester";
+		return "Task [id=" + id + ", name=" + name + ", description=" + description
+				+ ", priorityLevel=" + priorityLevel + "]";
 	}
+
+	
+//	@Override
+//	public String toString() {
+//		return "Tester";
+//	}
 	
 	
 }

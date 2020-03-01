@@ -28,44 +28,75 @@
 <!-- Your custom styles -->
 <link rel="stylesheet" href="/style.css">
 
-<title>${user.username}'s Dashboard</title>
+<title>${user.username}'sDashboard</title>
 </head>
 <body>
 	<%@ include file="partials/navbar.jsp"%>
 	<header>
-		<h1>${user.username}, welcometo your dashboard.</h1>
+		<p>
+		<h1>${user.username},welcometoyour dashboard.</h1>
+		</p>
+		<!-- TODO convert username to Username -->
 	</header>
 
 	<p>Your tasks will show here when I figure out how to do that. MAKE
 		IT WORK FIRST JEANNIE STOP THINKING ABOUT IT BEING PRETTY. STOP.</p>
 
-	<a href="/tasks/add">add a task</a>
-	
-	
-		<table>
-			<tr>
-				<th>Task Name</th>
-				<th>Description</th>
-				<!-- <th>Category</th> --> 
-				<th>Due Date</th>
-				<th>Priority</th>
-				<th>Complete</th>
-				<th></th>
-			</tr>
-			
-	<c:forEach var="task" items="${user.myTasks}">
+	<a href="/tasks/add" type="button"
+					class="btn btn-info"> Add a Task</a><p>
+
+
+	<table class="table table-hover">
+		<tr>
+			<th>Complete</th>
+			<th>Task Name</th>
+			<th>Description</th>
+			<!-- <th>Category</th> -->
+			<th>Due Date</th>
+			<th>Priority</th>
+
+			<th></th>
+		</tr>
+
+		<c:forEach var="task" items="${myTasks}">
 
 			<tr>
+				<td>
+						<c:choose>
+						<c:when test="${task.status eq true}"> 
+						<a href="/tasks/complete?id=${task.id}" type="button"
+					class="btn btn-warning"> Mark Incomplete</a>
+						</c:when><c:otherwise>
+							<a href="/tasks/complete?id=${task.id}" type="button"
+					class="btn btn-success"> Mark Complete</a>
+						</c:otherwise>
+						</c:choose>
+					</a> 
+					<!-- <div class="form-group">
+					<div class="custom-control custom-switch">
+						<input type="checkbox" class="custom-control-input" id="customSwitch1" 
+							checked="true" name="status">
+					</div>
+					</div> --> <!-- THIS IS NOT WORKING BUT THIS IS HOW I WANT IT TO WORK -->
+					<%-- 					<form class="form-group" action="/tasks/complete?id=${task.id}" method="post">
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input"
+								id="customSwitch1" name="status" checked="${!task.status}" value="" onChange="return this.form.submit()"> 
+								<label
+								class="custom-control-label" for="customSwitch1"></label>
+						</div>
+						</form> --%></td>
 				<td>${task.name}</td>
 				<td>${task.description}</td>
 				<%-- <td>${task.category}</td> --%>
 				<td>${task.dueDate}</td>
 				<td>${task.priorityLevel}</td>
-				<td>${task.status}</td>
-				<td><a href="/tasks/delete?id=${task.id}" type="button" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></td>
+
+				<td><a href="/tasks/delete?id=${task.id}" type="button"
+					class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></td>
 			</tr>
-		
-	</c:forEach>
+
+		</c:forEach>
 	</table>
 	<p>
 </body>

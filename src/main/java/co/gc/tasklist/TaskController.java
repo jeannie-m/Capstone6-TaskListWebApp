@@ -49,12 +49,24 @@ public class TaskController {
 		}
 		task.setUser(user);
 		tRepo.save(task);
-		return new ModelAndView("dashboard", "recentTask", task);
+		return new ModelAndView("redirect:/dashboard");
 	}
 	
 	@RequestMapping("/delete")
 	public ModelAndView deleteTask(@RequestParam("id") Long id) {
 		tRepo.deleteById(id);
+		return new ModelAndView("redirect:/dashboard");
+	}
+	
+	@RequestMapping("/complete")
+	public ModelAndView completeTask(@RequestParam("id") Long id) {
+		Task task = (Task) tRepo.findById(id).orElse(null);
+		if (task.getStatus() == true) {
+			task.setStatus("false");	
+		} else {
+			task.setStatus("true");
+		}
+		tRepo.save(task);
 		return new ModelAndView("redirect:/dashboard");
 	}
 }

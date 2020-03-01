@@ -1,9 +1,11 @@
 package co.gc.tasklist;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller; 
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import co.gc.tasklist.dao.TaskRepo;
 import co.gc.tasklist.dao.UserRepo;
 import co.gc.tasklist.entities.Task;
 import co.gc.tasklist.entities.User;
@@ -21,6 +25,8 @@ public class UserController {
 	
 	@Autowired
 	private UserRepo uRepo;
+	@Autowired
+	private TaskRepo tRepo;
 	
 	@Autowired
 	private HttpSession sesh;
@@ -83,13 +89,23 @@ public class UserController {
 			return new ModelAndView("redirect:/login");
 			//redirect to login with redir attribute
 		}else {
+			List<Task> taskList = tRepo.findByUserId(user.getId());
+
+			//Set<Task> taskList = user.getMyTasks();
 			//System.out.println(user.getMyTasks());
-		return new ModelAndView("dashboard");
+		return new ModelAndView("dashboard", "myTasks", taskList); 
 		}
 	}
-	@PostConstruct 	
+	@PostConstruct @Transactional
 	public void testIt() {
+		User user = uRepo.findByUsernameIgnoreCase("bob");
+		//sesh.setAttribute("user", user);
 		System.out.println("tester"); 
-		User user = (User)uRepo.findById(1L);
+		List<Task> taskList = tRepo.findAll();
+		//Set<Task> taskList = user.getMyTasks();
+		System.out.println(taskList.size());
+		for(Task task : taskList) {
+			System.out.println(task); 
+		}
 		}
 }
